@@ -2,9 +2,8 @@
 //  Created by Peter Combee on 05/11/2024.
 //
 
-@testable import Locations
-
 import XCTest
+@testable import Locations
 
 final class RemoteLocationsProviderTests: XCTestCase {
     
@@ -13,7 +12,6 @@ final class RemoteLocationsProviderTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        
         client = HTTPClientSpy()
         sut = RemoteLocationsProvider(httpClient: client)
     }
@@ -73,9 +71,7 @@ final class RemoteLocationsProviderTests: XCTestCase {
           ]
         }
         """
-        
         let validLocationsJsonData = Data(locationsJson.utf8)
-        
         client.stub = .success(validLocationsJsonData)
         
         let locations = try await sut.getLocations()
@@ -85,7 +81,6 @@ final class RemoteLocationsProviderTests: XCTestCase {
             Location(name: "Mumbai", latitude: 19.0823998, longitude: 72.8111468),
             Location(name: "Copenhagen", latitude: 55.6713442, longitude: 12.523785)
         ]
-              
         XCTAssertEqual(locations.count, 3)
         XCTAssertEqual(locations[0], expectedLocations[0])
         XCTAssertEqual(locations[1], expectedLocations[1])
