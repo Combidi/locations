@@ -23,7 +23,7 @@ import XCTest
 
 final class RemoteLocationsProviderTests: XCTestCase {
     
-    func test() async {
+    func test_getLocations_getsLocationsFromUrl() async {
         let client = HTTPClientSpy()
         let sut = RemoteLocationsProvider(httpClient: client)
         
