@@ -67,6 +67,18 @@ final class RemoteLocationsProviderTests: XCTestCase {
         }
     }
     
+    func test_getLocations_deliversErrorOnInvalidLocationsJson() async {
+        let client = HTTPClientSpy()
+        let sut = RemoteLocationsProvider(httpClient: client)
+
+        client.stub = .success(Data("any invalid locations json data".utf8))
+        
+        do {
+            _ = try await sut.getLocations()
+            XCTFail("Expected error on client error")
+        } catch {}
+    }
+    
     func test_getLocations_deliversLocationsOnValidLocationsJson() async throws {
         let client = HTTPClientSpy()
         let sut = RemoteLocationsProvider(httpClient: client)
@@ -114,7 +126,7 @@ final class RemoteLocationsProviderTests: XCTestCase {
         XCTAssertEqual(locations[0], expectedLocations[0])
         XCTAssertEqual(locations[1], expectedLocations[1])
         XCTAssertEqual(locations[2], expectedLocations[2])
-    }    
+    }
 }
 
 // MARK: - Helpers
