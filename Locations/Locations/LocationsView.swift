@@ -5,17 +5,21 @@
 import SwiftUI
 
 struct LocationsView: View {
+    
+    enum LoadingState {
+        case loading
+    }
+    
+    let state: LoadingState
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        switch state {
+        case .loading:
+            Text("Loading...")
         }
-        .padding()
     }
 }
 
 #Preview {
-    LocationsView()
+    LocationsView(state: .loading)
 }
