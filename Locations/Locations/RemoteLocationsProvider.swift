@@ -4,10 +4,6 @@
 
 import Foundation
 
-protocol HttpClient {
-    func get(from url: URL) throws -> Data
-}
-
 struct RemoteLocationsProvider: LocationsProvider {
 
     private struct DecodableLocations: Decodable {
