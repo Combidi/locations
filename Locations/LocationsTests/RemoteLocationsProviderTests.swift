@@ -42,10 +42,17 @@ import XCTest
 
 final class RemoteLocationsProviderTests: XCTestCase {
     
-    func test_getLocations_getsLocationsFromUrl() async {
-        let client = HTTPClientSpy()
-        let sut = RemoteLocationsProvider(httpClient: client)
+    private var client: HTTPClientSpy!
+    private var sut: RemoteLocationsProvider!
+    
+    override func setUp() {
+        super.setUp()
         
+        client = HTTPClientSpy()
+        sut = RemoteLocationsProvider(httpClient: client)
+    }
+    
+    func test_getLocations_getsLocationsFromUrl() async {
         _ = try? await sut.getLocations()
         
         let expectedUrl = URL(string: "https://raw.githubusercontent.com/abnamrocoesd/assignment-ios/main/locations.json")!
@@ -53,9 +60,6 @@ final class RemoteLocationsProviderTests: XCTestCase {
     }
     
     func test_getLocations_deliversErrorOnHttpClientError() async {
-        let client = HTTPClientSpy()
-        let sut = RemoteLocationsProvider(httpClient: client)
-        
         let error = NSError(domain: "any", code: 0)
         client.stub = .failure(error)
         
@@ -68,9 +72,6 @@ final class RemoteLocationsProviderTests: XCTestCase {
     }
     
     func test_getLocations_deliversErrorOnInvalidLocationsJson() async {
-        let client = HTTPClientSpy()
-        let sut = RemoteLocationsProvider(httpClient: client)
-
         client.stub = .success(Data("any invalid locations json data".utf8))
         
         do {
@@ -80,9 +81,6 @@ final class RemoteLocationsProviderTests: XCTestCase {
     }
     
     func test_getLocations_deliversLocationsOnValidLocationsJson() async throws {
-        let client = HTTPClientSpy()
-        let sut = RemoteLocationsProvider(httpClient: client)
-        
         let locationsJson = """
         {
           "locations": 
