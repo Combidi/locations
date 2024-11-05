@@ -10,6 +10,16 @@ protocol HttpClient {
 
 struct RemoteLocationsProvider: LocationsProvider {
 
+    private struct DecodableLocations: Decodable {
+        let locations: [DecodableLocation]
+    }
+    
+    private struct DecodableLocation: Decodable {
+        let name: String?
+        let lat: Double
+        let long: Double
+    }
+    
     private let httpClient: HttpClient
     
     init(httpClient: HttpClient) {
@@ -19,17 +29,6 @@ struct RemoteLocationsProvider: LocationsProvider {
     func getLocations() async throws -> [Location] {
         let locationsURL = URL(string: "https://raw.githubusercontent.com/abnamrocoesd/assignment-ios/main/locations.json")!
         let data = try httpClient.get(from: locationsURL)
-        
-        struct DecodableLocations: Decodable {
-            
-            struct DecodableLocation: Decodable {
-                let name: String?
-                let lat: Double
-                let long: Double
-            }
-
-            let locations: [DecodableLocation]
-        }
         
         let decodableLocations = try JSONDecoder().decode(DecodableLocations.self, from: data)
                 
