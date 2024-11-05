@@ -4,6 +4,10 @@
 
 @testable import Locations
 
+protocol HttpClient {
+    func get(from url: URL) throws -> Data
+}
+
 private struct RemoteLocationsProvider: LocationsProvider {
 
     private let httpClient: HTTPClientSpy
@@ -129,7 +133,7 @@ final class RemoteLocationsProviderTests: XCTestCase {
 
 // MARK: - Helpers
 
-private final class HTTPClientSpy {
+private final class HTTPClientSpy: HttpClient {
     
     var stub: Result<Data, Error> = .failure(NSError(domain: "", code: 1))
         
