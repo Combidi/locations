@@ -9,5 +9,5 @@ struct Location {
 }
 
 protocol LocationsProvider {
-    func getLocations() async -> [Location]
+    func getLocations() async throws -> [Location]
 }

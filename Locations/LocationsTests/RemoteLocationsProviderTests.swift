@@ -12,9 +12,9 @@ private struct RemoteLocationsProvider: LocationsProvider {
         self.httpClient = httpClient
     }
     
-    func getLocations() async -> [Location] {
+    func getLocations() async throws -> [Location] {
         let locationsURL = URL(string: "https://raw.githubusercontent.com/abnamrocoesd/assignment-ios/main/locations.json")!
-        httpClient.get(from: locationsURL)
+        try httpClient.get(from: locationsURL)
         return []
     }
 }
@@ -23,14 +23,29 @@ import XCTest
 
 final class RemoteLocationsProviderTests: XCTestCase {
     
-    func test_getLocations_getsLocationsFromUrl() async {
+    func test_getLocations_getsLocationsFromUrl() async throws {
         let client = HTTPClientSpy()
         let sut = RemoteLocationsProvider(httpClient: client)
         
-        _ = await sut.getLocations()
+        _ = try await sut.getLocations()
         
         let expectedUrl = URL(string: "https://raw.githubusercontent.com/abnamrocoesd/assignment-ios/main/locations.json")!
         XCTAssertEqual(client.capturedUrls, [expectedUrl])
+    }
+    
+    func test_getLocations_deliversErrorOnHttpClientError() async {
+        let client = HTTPClientSpy()
+        let sut = RemoteLocationsProvider(httpClient: client)
+        
+        let error = NSError(domain: "any", code: 0)
+        client.stub = error
+        
+        do {
+            _ = try await sut.getLocations()
+            XCTFail("Expected error on client error")
+        } catch let capturedError {
+            XCTAssertEqual(capturedError as NSError, error)
+        }
     }
 }
 
@@ -38,9 +53,12 @@ final class RemoteLocationsProviderTests: XCTestCase {
 
 private final class HTTPClientSpy {
     
+    var stub: Error?
+    
     private(set) var capturedUrls: [URL] = []
     
-    func get(from url: URL) {
+    func get(from url: URL) throws {
         capturedUrls.append(url)
+        try stub.map { throw $0 }
     }
 }
