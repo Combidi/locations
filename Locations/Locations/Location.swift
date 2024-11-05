@@ -7,7 +7,3 @@ struct Location: Equatable {
     let latitude: Double
     let longitude: Double
 }
-
-protocol LocationsProvider {
-    func getLocations() async throws -> [Location]
-}
