@@ -31,12 +31,14 @@ struct RemoteLocationsProvider: LocationsProvider {
         let data = try httpClient.get(from: locationsURL)
         
         let decodableLocations = try JSONDecoder().decode(DecodableLocations.self, from: data)
-                
-        let locations: [Location] = decodableLocations.locations.compactMap {
-            guard let name = $0.name else { return nil }
-            return Location(name: name, latitude: $0.lat, longitude: $0.long)
-        }
+               
+        let locations = decodableLocations.locations.compactMap(mapLocation)
         
         return locations
+    }
+    
+    private func mapLocation(_ location: DecodableLocation) -> Location? {
+        guard let name = location.name else { return nil }
+        return Location(name: name, latitude: location.lat, longitude: location.long)
     }
 }
