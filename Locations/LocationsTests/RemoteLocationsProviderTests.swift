@@ -10,9 +10,9 @@ protocol HttpClient {
 
 private struct RemoteLocationsProvider: LocationsProvider {
 
-    private let httpClient: HTTPClientSpy
+    private let httpClient: HttpClient
     
-    init(httpClient: HTTPClientSpy) {
+    init(httpClient: HttpClient) {
         self.httpClient = httpClient
     }
     
