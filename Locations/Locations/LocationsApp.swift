@@ -8,7 +8,7 @@ import SwiftUI
 struct LocationsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LocationsView()
         }
     }
 }
