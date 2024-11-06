@@ -9,7 +9,7 @@ struct LocationsApp: App {
     var body: some Scene {
         WindowGroup {
             LocationsView(
-                model: LocationsView.Model(
+                model: Model(
                     locationsProvider: RemoteLocationsProvider(
                         httpClient: UrlSessionHttpClient(
                             session: URLSession(configuration: .ephemeral)

@@ -10,7 +10,7 @@ final class LocationsViewModelTests: XCTestCase {
     
     func test_loadLocations_requestsLocationsFromProvider() async {
         let locationsProvider = LocationsProviderSpy()
-        let sut = LocationsView.Model(locationsProvider: locationsProvider)
+        let sut = Model(locationsProvider: locationsProvider)
         
         XCTAssertEqual(
             locationsProvider.callcount, 0,
@@ -27,14 +27,14 @@ final class LocationsViewModelTests: XCTestCase {
     
     func test_state_isLoadingByDefault() {
         let locationsProvider = LocationsProviderSpy()
-        let sut = LocationsView.Model(locationsProvider: locationsProvider)
+        let sut = Model(locationsProvider: locationsProvider)
         
         XCTAssertEqual(sut.state, .loading)
     }
     
     func test_states_duringLoading() async {
         let locationsProvider = LocationsProviderSpy()
-        let sut = LocationsView.Model(locationsProvider: locationsProvider)
+        let sut = Model(locationsProvider: locationsProvider)
         var cancellables: Set<AnyCancellable> = []
         var capturedStates: [LocationsLoadingState] = []
         sut.$state
