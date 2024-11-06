@@ -12,7 +12,7 @@ enum LocationsLoadingState: Equatable {
 
 struct LocationsView: View {
     
-    final class Model {
+    final class Model: ObservableObject {
         
         private let locationsProvider: LocationsProvider
         
