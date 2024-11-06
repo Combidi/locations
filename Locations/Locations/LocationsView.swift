@@ -20,10 +20,15 @@ struct LocationsView: View {
             self.locationsProvider = locationsProvider
         }
         
-        let state: LocationsLoadingState = .loading
+        @Published private(set) var state: LocationsLoadingState = .loading
         
         func loadLocations() async {
-            _ = try? await locationsProvider.getLocations()
+            if state != .loading { state = .loading }
+            do {
+                state = .presenting(try await locationsProvider.getLocations())
+            } catch {
+                state = .error
+            }
         }
     }
         
