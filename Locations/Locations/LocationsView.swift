@@ -10,26 +10,6 @@ enum LocationsLoadingState: Equatable {
     case presenting([Location])
 }
 
-final class LocationsViewModel: ObservableObject {
-    
-    private let locationsProvider: LocationsProvider
-    
-    init(locationsProvider: LocationsProvider) {
-        self.locationsProvider = locationsProvider
-    }
-    
-    @Published private(set) var state: LocationsLoadingState = .loading
-    
-    func loadLocations() async {
-        if state != .loading { state = .loading }
-        do {
-            state = .presenting(try await locationsProvider.getLocations())
-        } catch {
-            state = .error
-        }
-    }
-}
-
 struct LocationsView: View {
             
     @ObservedObject private var model: LocationsViewModel
