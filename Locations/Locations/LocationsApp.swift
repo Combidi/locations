@@ -8,7 +8,15 @@ import SwiftUI
 struct LocationsApp: App {
     var body: some Scene {
         WindowGroup {
-            LocationsView(state: .loading)
+            LocationsView(
+                model: LocationsView.Model(
+                    locationsProvider: RemoteLocationsProvider(
+                        httpClient: UrlSessionHttpClient(
+                            session: URLSession(configuration: .ephemeral)
+                        )
+                    )
+                )
+            )
         }
     }
 }

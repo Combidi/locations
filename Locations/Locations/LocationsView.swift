@@ -32,10 +32,14 @@ struct LocationsView: View {
         }
     }
         
-    let state: LocationsLoadingState
+    @ObservedObject private var model: Model
+    
+    init(model: Model) {
+        self.model = model
+    }
     
     var body: some View {
-        LocationsPresentingView(state: state)
+        LocationsPresentingView(state: model.state)
     }
 }
 
