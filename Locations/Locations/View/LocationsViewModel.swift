@@ -4,6 +4,7 @@
 
 import Foundation
 
+@MainActor
 final class LocationsViewModel: ObservableObject {
     
     private let locationsProvider: LocationsProvider
