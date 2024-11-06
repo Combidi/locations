@@ -6,6 +6,19 @@ import SwiftUI
 
 struct LocationsView: View {
     
+    final class Model {
+        
+        private let locationsProvider: LocationsProvider
+        
+        init(locationsProvider: LocationsProvider) {
+            self.locationsProvider = locationsProvider
+        }
+        
+        func loadLocations() async {
+            _ = try? await locationsProvider.getLocations()
+        }
+    }
+    
     enum LoadingState {
         case loading
         case error
