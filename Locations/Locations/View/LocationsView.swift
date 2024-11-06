@@ -4,12 +4,6 @@
 
 import SwiftUI
 
-enum LocationsLoadingState: Equatable {
-    case loading
-    case error
-    case presenting([Location])
-}
-
 struct LocationsView: View {
             
     @ObservedObject private var model: LocationsViewModel
