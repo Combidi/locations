@@ -14,5 +14,6 @@ struct LocationsView: View {
     
     var body: some View {
         LocationsPresentingView(state: model.state)
+            .task { await model.loadLocations() }
     }
 }
