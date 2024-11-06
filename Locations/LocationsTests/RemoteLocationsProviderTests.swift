@@ -96,8 +96,8 @@ private final class HTTPClientSpy: HttpClient {
         
     private(set) var capturedUrls: [URL] = []
     
-    func get(from url: URL) throws -> Data {
+    func get(from url: URL) throws -> (Data, HTTPURLResponse) {
         capturedUrls.append(url)
-        return try stub.get()
+        return (try stub.get(), HTTPURLResponse())
     }
 }

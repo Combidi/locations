@@ -24,7 +24,7 @@ struct RemoteLocationsProvider: LocationsProvider {
     
     func getLocations() async throws -> [Location] {
         let locationsURL = URL(string: "https://raw.githubusercontent.com/abnamrocoesd/assignment-ios/main/locations.json")!
-        let data = try httpClient.get(from: locationsURL)
+        let (data, _) = try await httpClient.get(from: locationsURL)
         
         let decodableLocations = try JSONDecoder().decode(DecodableLocations.self, from: data)
                
