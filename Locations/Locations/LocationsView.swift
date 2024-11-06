@@ -10,7 +10,7 @@ enum LocationsLoadingState: Equatable {
     case presenting([Location])
 }
 
-final class Model: ObservableObject {
+final class LocationsViewModel: ObservableObject {
     
     private let locationsProvider: LocationsProvider
     
@@ -32,9 +32,9 @@ final class Model: ObservableObject {
 
 struct LocationsView: View {
             
-    @ObservedObject private var model: Model
+    @ObservedObject private var model: LocationsViewModel
     
-    init(model: Model) {
+    init(model: LocationsViewModel) {
         self.model = model
     }
     
