@@ -4,6 +4,12 @@
 
 import SwiftUI
 
+enum LocationsLoadingState: Equatable {
+    case loading
+    case error
+    case presenting([Location])
+}
+
 struct LocationsView: View {
     
     final class Model {
@@ -14,18 +20,14 @@ struct LocationsView: View {
             self.locationsProvider = locationsProvider
         }
         
+        let state: LocationsLoadingState = .loading
+        
         func loadLocations() async {
             _ = try? await locationsProvider.getLocations()
         }
     }
-    
-    enum LoadingState {
-        case loading
-        case error
-        case presenting([Location])
-    }
-    
-    let state: LoadingState
+        
+    let state: LocationsLoadingState
     
     var body: some View {
         switch state {

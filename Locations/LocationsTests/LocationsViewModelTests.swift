@@ -23,6 +23,13 @@ final class LocationsViewModelTests: XCTestCase {
             "Expected one load request after calling `loadLocations`"
         )
     }
+    
+    func test_state_isLoadingByDefault() {
+        let locationsProvider = LocationsProviderSpy()
+        let sut = LocationsView.Model(locationsProvider: locationsProvider)
+        
+        XCTAssertEqual(sut.state, .loading)
+    }
 }
 
 // MARK: Helpers
@@ -30,7 +37,7 @@ final class LocationsViewModelTests: XCTestCase {
 private final class LocationsProviderSpy: LocationsProvider {
 
     private(set) var callcount: Int = 0
-    
+        
     func getLocations() async throws -> [Location] {
         callcount += 1
         return []
