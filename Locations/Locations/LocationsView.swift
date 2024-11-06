@@ -35,6 +35,19 @@ struct LocationsView: View {
     let state: LocationsLoadingState
     
     var body: some View {
+        LocationsPresentingView(state: state)
+    }
+}
+
+struct LocationsPresentingView: View {
+    
+    private let state: LocationsLoadingState
+    
+    init(state: LocationsLoadingState) {
+        self.state = state
+    }
+    
+    var body: some View {
         switch state {
         case .loading:
             Text("Loading...")
