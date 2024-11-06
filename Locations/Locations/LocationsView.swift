@@ -62,15 +62,15 @@ struct LocationsPresentingView: View {
 }
 
 #Preview("Locations loading") {
-    LocationsView(state: .loading)
+    LocationsPresentingView(state: .loading)
 }
 
 #Preview("Locations error") {
-    LocationsView(state: .error)
+    LocationsPresentingView(state: .error)
 }
 
 #Preview("Locations presenting") {
-    LocationsView(state: .presenting([
+    LocationsPresentingView(state: .presenting([
         Location(name: "Amsterdam", latitude: 0, longitude: 0),
         Location(name: "Mumbai", latitude: 0, longitude: 0),
         Location(name: "Copenhagen", latitude: 0, longitude: 0)
