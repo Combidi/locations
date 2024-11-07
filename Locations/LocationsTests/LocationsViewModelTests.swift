@@ -6,6 +6,7 @@ import XCTest
 import Combine
 @testable import Locations
 
+@MainActor
 final class LocationsViewModelTests: XCTestCase {
     
     func test_loadLocations_requestsLocationsFromProvider() async {
