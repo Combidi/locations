@@ -26,11 +26,11 @@ struct RemoteLocationsProvider: LocationsProvider {
         let locationsURL = URL(string: "https://raw.githubusercontent.com/abnamrocoesd/assignment-ios/main/locations.json")!
         let (data, _) = try await httpClient.get(from: locationsURL)
         let decodableLocations = try JSONDecoder().decode(DecodableLocations.self, from: data)
-        let locations = decodableLocations.locations.compactMap(mapLocation)
+        let locations = decodableLocations.locations.compactMap(mapToLocation)
         return locations
     }
     
-    private func mapLocation(_ location: DecodableLocation) -> Location? {
+    private func mapToLocation(_ location: DecodableLocation) -> Location? {
         guard let name = location.name else { return nil }
         return Location(name: name, latitude: location.lat, longitude: location.long)
     }
