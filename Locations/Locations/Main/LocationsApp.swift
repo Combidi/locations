@@ -16,7 +16,8 @@ struct LocationsApp: App {
                         )
                     ),
                     onLocationSelection: { location in
-                        print("\(location) selected")
+                        WikipediaLocationNavigator(openUrl: { UIApplication.shared.open($0) })
+                        .showLocationOnWikipedia(location)
                     }
                 )
             )
