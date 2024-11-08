@@ -34,16 +34,17 @@ final class LocationsViewModel: ObservableObject {
         if state != .loading { state = .loading }
         do {
             let locations = try await locationsProvider.getLocations()
-            let presentableLocations = locations.map { location in
-                PresentableLocation(
-                    name: location.name,
-                    onSelection: {
-                        self.onLocationSelection(location)
-                    })
-            }
+            let presentableLocations = locations.map(mapToPresentableLocation)
             state = .presenting(presentableLocations)
         } catch {
             state = .error
         }
+    }
+    
+    private func mapToPresentableLocation(_ location: Location) -> PresentableLocation {
+        PresentableLocation(
+            name: location.name,
+            onSelection: { [onLocationSelection] in onLocationSelection(location) }
+        )
     }
 }
