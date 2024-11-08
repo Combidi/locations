@@ -11,7 +11,10 @@ final class LocationsViewModelTests: XCTestCase {
     
     func test_loadLocations_requestsLocationsFromProvider() async {
         let locationsProvider = LocationsProviderSpy()
-        let sut = LocationsViewModel(locationsProvider: locationsProvider)
+        let sut = LocationsViewModel(
+            locationsProvider: locationsProvider,
+            onLocationSelection: { _ in }
+        )
         
         XCTAssertEqual(
             locationsProvider.callcount, 0,
@@ -28,14 +31,20 @@ final class LocationsViewModelTests: XCTestCase {
     
     func test_state_isLoadingByDefault() {
         let locationsProvider = LocationsProviderSpy()
-        let sut = LocationsViewModel(locationsProvider: locationsProvider)
+        let sut = LocationsViewModel(
+            locationsProvider: locationsProvider,
+            onLocationSelection: { _ in }
+        )
         
         XCTAssertEqual(sut.state, .loading)
     }
     
     func test_states_duringLoading() async {
         let locationsProvider = LocationsProviderSpy()
-        let sut = LocationsViewModel(locationsProvider: locationsProvider)
+        let sut = LocationsViewModel(
+            locationsProvider: locationsProvider,
+            onLocationSelection: { _ in }
+        )
         var cancellables: Set<AnyCancellable> = []
         var capturedStates: [LocationsLoadingState] = []
         sut.$state
@@ -61,10 +70,47 @@ final class LocationsViewModelTests: XCTestCase {
         
         await sut.loadLocations()
 
-        let presentableLocation = PresentableLocation(name: "Velp")
+        let presentableLocation = PresentableLocation(name: "Velp", onSelection: {})
         XCTAssertEqual(
             capturedStates, [.loading, .error, .loading, .presenting([presentableLocation])],
             "Expected second loading state followed by presentation state after successful loading"
+        )
+    }
+    
+    func test_selectingLocation_notifiesHandler() async {
+        let locationsProvider = LocationsProviderSpy()
+        let locationSelectionHandler = LocationSelectionHandlerSpy()
+        let sut = LocationsViewModel(
+            locationsProvider: locationsProvider,
+            onLocationSelection: locationSelectionHandler.onLocationSelection
+        )
+        let firstLocation = Location(name: "First", latitude: 1, longitude: 2)
+        let secondLocation = Location(name: "Second", latitude: 1, longitude: 2)
+        locationsProvider.stub = .success([firstLocation, secondLocation])
+        
+        await sut.loadLocations()
+
+        guard case let .presenting(presentableLocations) = sut.state else {
+            return XCTFail("Expected presenting state with locations, got \(sut.state) instead")
+        }
+        
+        XCTAssertEqual(
+            locationSelectionHandler.capturedLocations, [],
+            "Expected no locations before first location has been selected"
+        )
+        
+        presentableLocations[0].onSelection()
+        
+        XCTAssertEqual(
+            locationSelectionHandler.capturedLocations, [firstLocation],
+            "Expected first location after location has been selected"
+        )
+
+        presentableLocations[1].onSelection()
+
+        XCTAssertEqual(
+            locationSelectionHandler.capturedLocations, [firstLocation, secondLocation],
+            "Expected second location after another location has been selected"
         )
     }
 }
@@ -80,5 +126,14 @@ private final class LocationsProviderSpy: LocationsProvider {
     func getLocations() throws -> [Location] {
         callcount += 1
         return try stub.get()
+    }
+}
+
+private final class LocationSelectionHandlerSpy {
+    
+    private(set) var capturedLocations: [Location] = []
+    
+    func onLocationSelection(_ location: Location) {
+        capturedLocations.append(location)
     }
 }

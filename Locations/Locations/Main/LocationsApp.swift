@@ -14,7 +14,10 @@ struct LocationsApp: App {
                         httpClient: UrlSessionHttpClient(
                             session: URLSession(configuration: .ephemeral)
                         )
-                    )
+                    ),
+                    onLocationSelection: { location in
+                        print("\(location) selected")
+                    }
                 )
             )
         }

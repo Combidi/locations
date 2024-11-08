@@ -20,7 +20,7 @@ struct LocationsPresentingView: View {
             Text("Oeps! Something went wrong...")
         case let .presenting(locations):
             List(locations, id: \.name) { location in
-                Button(action: {}) {
+                Button(action: location.onSelection) {
                     Text(location.name)                    
                 }
             }
@@ -38,8 +38,8 @@ struct LocationsPresentingView: View {
 
 #Preview("Locations presenting") {
     LocationsPresentingView(state: .presenting([
-        PresentableLocation(name: "Amsterdam"),
-        PresentableLocation(name: "Mumbai"),
-        PresentableLocation(name: "Copenhagen")
+        PresentableLocation(name: "Amsterdam", onSelection: {}),
+        PresentableLocation(name: "Mumbai", onSelection: {}),
+        PresentableLocation(name: "Copenhagen", onSelection: {})
     ]))
 }
