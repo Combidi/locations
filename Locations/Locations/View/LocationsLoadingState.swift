@@ -5,5 +5,5 @@
 enum LocationsLoadingState: Equatable {
     case loading
     case error
-    case presenting([Location])
+    case presenting([PresentableLocation])
 }

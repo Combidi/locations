@@ -4,6 +4,10 @@
 
 import Foundation
 
+struct PresentableLocation: Equatable {
+    let name: String
+}
+
 @MainActor
 final class LocationsViewModel: ObservableObject {
     
@@ -18,7 +22,11 @@ final class LocationsViewModel: ObservableObject {
     func loadLocations() async {
         if state != .loading { state = .loading }
         do {
-            state = .presenting(try await locationsProvider.getLocations())
+            let locations = try await locationsProvider.getLocations()
+            let presentableLocations = locations.map {
+                PresentableLocation(name: $0.name)
+            }
+            state = .presenting(presentableLocations)
         } catch {
             state = .error
         }

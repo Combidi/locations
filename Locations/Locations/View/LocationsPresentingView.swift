@@ -38,8 +38,8 @@ struct LocationsPresentingView: View {
 
 #Preview("Locations presenting") {
     LocationsPresentingView(state: .presenting([
-        Location(name: "Amsterdam", latitude: 0, longitude: 0),
-        Location(name: "Mumbai", latitude: 0, longitude: 0),
-        Location(name: "Copenhagen", latitude: 0, longitude: 0)
+        PresentableLocation(name: "Amsterdam"),
+        PresentableLocation(name: "Mumbai"),
+        PresentableLocation(name: "Copenhagen")
     ]))
 }

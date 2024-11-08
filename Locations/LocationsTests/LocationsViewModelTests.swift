@@ -61,8 +61,9 @@ final class LocationsViewModelTests: XCTestCase {
         
         await sut.loadLocations()
 
+        let presentableLocation = PresentableLocation(name: "Velp")
         XCTAssertEqual(
-            capturedStates, [.loading, .error, .loading, .presenting([location])],
+            capturedStates, [.loading, .error, .loading, .presenting([presentableLocation])],
             "Expected second loading state followed by presentation state after successful loading"
         )
     }
