@@ -15,7 +15,7 @@ struct WikipediaLocationNavigator {
     func showLocationOnWikipedia(_ location: Location) {
         let locationUrl = URL(string: "https://en.wikipedia.org")!
             .appendingPathComponent("wiki")
-            .appendingPathExtension(location.name)
+            .appendingPathComponent(location.name)
         
         openUrl(locationUrl)
     }

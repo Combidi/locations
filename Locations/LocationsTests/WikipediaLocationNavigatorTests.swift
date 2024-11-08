@@ -6,7 +6,7 @@ import XCTest
 import Foundation
 @testable import Locations
 
-final class WikipediaLocationNavigatorTests {
+final class WikipediaLocationNavigatorTests: XCTestCase {
     
     func test_showLocationOnWikipedia_opensWikipediaUrl() {
         let urlOpenerSpy = UrlOpenerSpy()
@@ -22,18 +22,18 @@ final class WikipediaLocationNavigatorTests {
         
         XCTAssertEqual(
             urlOpenerSpy.capturedUrls,
-            [URL(string: "https://en.wikipedia.org/wiki/arnhem")!],
+            [URL(string: "https://en.wikipedia.org/wiki/Arnhem")!],
             "Expected first URL"
         )
 
-        let amsterdam = Location(name: "Arnhem", latitude: 0, longitude: 0)
+        let amsterdam = Location(name: "Amsterdam", latitude: 0, longitude: 0)
         sut.showLocationOnWikipedia(amsterdam)
         
         XCTAssertEqual(
             urlOpenerSpy.capturedUrls,
             [
-                URL(string: "https://en.wikipedia.org/wiki/arnhem")!,
-                URL(string: "https://en.wikipedia.org/wiki/amsterdam")!,
+                URL(string: "https://en.wikipedia.org/wiki/Arnhem")!,
+                URL(string: "https://en.wikipedia.org/wiki/Amsterdam")!,
             ],
             "Expected second URL"
         )
