@@ -4,16 +4,6 @@
 
 import Foundation
 
-struct PresentableLocation: Equatable {
-    
-    let name: String
-    let onSelection: () -> Void
-    
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.name == rhs.name
-    }
-}
-
 @MainActor
 final class LocationsViewModel: ObservableObject {
     
