@@ -6,23 +6,6 @@ import XCTest
 import Foundation
 @testable import Locations
 
-struct WikipediaLocationNavigator {
-    
-    private let openUrl: (URL) -> Void
-    
-    init(openUrl: @escaping (URL) -> Void) {
-        self.openUrl = openUrl
-    }
-    
-    func showLocationOnWikipedia(_ location: Location) {
-        let locationUrl = URL(string: "https://en.wikipedia.org")!
-            .appendingPathComponent("wiki")
-            .appendingPathExtension(location.name)
-        
-        openUrl(locationUrl)
-    }
-}
-
 final class WikipediaLocationNavigatorTests {
     
     func test_showLocationOnWikipedia_opensWikipediaUrl() {
