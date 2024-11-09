@@ -86,8 +86,8 @@ final class LocationsViewModelIntegrationTests: XCTestCase {
         presentableLocations[0].onSelection()
         
         XCTAssertEqual(
-            urlOpener.openedUrls, [URL(string: "https://en.wikipedia.org/wiki/Arnhem")!],
-            "Expected first url to be opened after location has been selected"
+            urlOpener.openedUrls,
+            [URL(string: "https://en.wikipedia.org/wiki/Arnhem")!]
         )
 
         presentableLocations[1].onSelection()
@@ -97,8 +97,7 @@ final class LocationsViewModelIntegrationTests: XCTestCase {
             [
                 URL(string: "https://en.wikipedia.org/wiki/Arnhem")!,
                 URL(string: "https://en.wikipedia.org/wiki/Amsterdam")!
-            ],
-            "Expected second url to be opened after another location has been selected"
+            ]
         )
     }
 }
