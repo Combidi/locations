@@ -7,9 +7,12 @@ import XCTest
 
 final class PresentableLocationsMapperTests: XCTestCase {
 
+    private lazy var selectionHandlerSpy = LocationSelectionHandlerSpy()
+    private lazy var sut = PresentableLocationMapper(
+        onLocationSelection: selectionHandlerSpy.onLocationSelection
+    )
+    
     func test_mapToPresentableLocations_correctlyMapsPresentableValues() {
-        let sut = PresentableLocationMapper(onLocationSelection: { _ in })
-        
         let locations = [
             Location(name: "Amsterdam", latitude: 1, longitude: 2),
             Location(name: "Arnhem", latitude: 1, longitude: 2)
@@ -23,9 +26,6 @@ final class PresentableLocationsMapperTests: XCTestCase {
     }
     
     func test_presentableLocationSelection_notifiesSelectionHandler() {
-        let selectionHandlerSpy = LocationSelectionHandlerSpy()
-        let sut = PresentableLocationMapper(onLocationSelection: selectionHandlerSpy.onLocationSelection)
-        
         let amsterdam = Location(name: "Amsterdam", latitude: 1, longitude: 2)
         let arnhem = Location(name: "Arnhem", latitude: 1, longitude: 2)
         
