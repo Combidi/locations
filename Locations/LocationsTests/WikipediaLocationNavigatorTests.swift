@@ -12,15 +12,15 @@ final class WikipediaLocationNavigatorTests: XCTestCase {
         let sut = WikipediaLocationNavigator(openUrl: urlOpenerSpy.openUrl)
                 
         XCTAssertEqual(
-            urlOpenerSpy.capturedUrls, [],
-            "Expected no URLs before show location"
+            urlOpenerSpy.openedUrls, [],
+            "Expected no URL before show location"
         )
 
         let arnhem = Location(name: "Arnhem", latitude: 0, longitude: 0)
         sut.showLocationOnWikipedia(arnhem)
         
         XCTAssertEqual(
-            urlOpenerSpy.capturedUrls,
+            urlOpenerSpy.openedUrls,
             [URL(string: "https://en.wikipedia.org/wiki/Arnhem")!],
             "Expected first URL"
         )
@@ -29,7 +29,7 @@ final class WikipediaLocationNavigatorTests: XCTestCase {
         sut.showLocationOnWikipedia(amsterdam)
         
         XCTAssertEqual(
-            urlOpenerSpy.capturedUrls,
+            urlOpenerSpy.openedUrls,
             [
                 URL(string: "https://en.wikipedia.org/wiki/Arnhem")!,
                 URL(string: "https://en.wikipedia.org/wiki/Amsterdam")!,
@@ -43,9 +43,9 @@ final class WikipediaLocationNavigatorTests: XCTestCase {
 
 private final class UrlOpenerSpy {
     
-    private(set) var capturedUrls: [URL] = []
+    private(set) var openedUrls: [URL] = []
     
     func openUrl(_ url: URL) {
-        capturedUrls.append(url)
+        openedUrls.append(url)
     }
 }
