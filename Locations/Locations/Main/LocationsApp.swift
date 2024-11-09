@@ -31,9 +31,12 @@ enum LocationsViewModelAssembler {
         let navigator = WikipediaLocationNavigator(
             openUrl: openUrl
         )
+        let mapper = PresentableLocationMapper(
+            onLocationSelection: navigator.showLocationOnWikipedia
+        )
         let viewModel = LocationsViewModel(
             locationsProvider: locationsProvider,
-            onLocationSelection: navigator.showLocationOnWikipedia
+            mapToPresentableLocations: mapper.mapToPresentableLocations
         )
         return viewModel
     }
