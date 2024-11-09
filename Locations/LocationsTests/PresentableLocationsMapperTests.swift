@@ -5,24 +5,6 @@
 import XCTest
 @testable import Locations
 
-struct PresentableLocationMapper {
-    
-    private let onLocationSelection: (Location) -> Void
-    
-    init(onLocationSelection: @escaping (Location) -> Void) {
-        self.onLocationSelection = onLocationSelection
-    }
-    
-    func mapToPresentableLocations(locations: [Location]) -> [PresentableLocation] {
-        locations.map { location in
-            PresentableLocation(
-                name: location.name,
-                onSelection: { onLocationSelection(location) }
-            )
-        }
-    }
-}
-
 final class PresentableLocationsMapperTests: XCTestCase {
 
     func test_mapToPresentableLocations_correctlyMapsPresentableValues() {
