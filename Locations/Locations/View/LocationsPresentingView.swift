@@ -19,7 +19,7 @@ struct LocationsPresentingView: View {
         case .error:
             Text("Oeps! Something went wrong...")
         case let .presenting(locations):
-            List(locations, id: \.name) { location in
+            List(locations) { location in
                 Button(action: location.onSelection) {
                     Text(location.name)                    
                 }
