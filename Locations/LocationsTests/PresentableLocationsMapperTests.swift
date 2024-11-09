@@ -38,17 +38,11 @@ final class PresentableLocationsMapperTests: XCTestCase {
         
         presentables[1].onSelection()
         
-        XCTAssertEqual(
-            selectionHandlerSpy.selectedLocations, [arnhem],
-            "Expected first location after Arnhem has been selected"
-        )
+        XCTAssertEqual(selectionHandlerSpy.selectedLocations, [arnhem])
 
         presentables[0].onSelection()
 
-        XCTAssertEqual(
-            selectionHandlerSpy.selectedLocations, [arnhem, amsterdam],
-            "Expected second location after Amsterdam has been selected"
-        )
+        XCTAssertEqual(selectionHandlerSpy.selectedLocations, [arnhem, amsterdam])
     }
 }
 
