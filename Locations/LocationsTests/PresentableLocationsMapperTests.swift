@@ -33,7 +33,7 @@ final class PresentableLocationsMapperTests: XCTestCase {
  
         XCTAssertEqual(
             selectionHandlerSpy.selectedLocations, [],
-            "Expected no locations after first location has been selected"
+            "Expected no locations before first location has been selected"
         )
         
         presentables[1].onSelection()
