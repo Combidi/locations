@@ -9,13 +9,14 @@ import Combine
 @MainActor
 final class LocationsViewModelTests: XCTestCase {
     
+    private lazy var locationsProvider = LocationsProviderSpy()
+    private lazy var locationSelectionHandler = LocationSelectionHandlerSpy()
+    private lazy var sut = LocationsViewModel(
+        locationsProvider: locationsProvider,
+        onLocationSelection: locationSelectionHandler.onLocationSelection
+    )
+    
     func test_loadLocations_requestsLocationsFromProvider() async {
-        let locationsProvider = LocationsProviderSpy()
-        let sut = LocationsViewModel(
-            locationsProvider: locationsProvider,
-            onLocationSelection: { _ in }
-        )
-        
         XCTAssertEqual(
             locationsProvider.callcount, 0,
             "Expected no load request before calling `loadLocations`"
@@ -30,21 +31,10 @@ final class LocationsViewModelTests: XCTestCase {
     }
     
     func test_state_isLoadingByDefault() {
-        let locationsProvider = LocationsProviderSpy()
-        let sut = LocationsViewModel(
-            locationsProvider: locationsProvider,
-            onLocationSelection: { _ in }
-        )
-        
         XCTAssertEqual(sut.state, .loading)
     }
     
     func test_states_duringLoading() async {
-        let locationsProvider = LocationsProviderSpy()
-        let sut = LocationsViewModel(
-            locationsProvider: locationsProvider,
-            onLocationSelection: { _ in }
-        )
         var cancellables: Set<AnyCancellable> = []
         var capturedStates: [LocationsLoadingState] = []
         sut.$state
@@ -78,12 +68,6 @@ final class LocationsViewModelTests: XCTestCase {
     }
     
     func test_selectingLocation_notifiesHandler() async {
-        let locationsProvider = LocationsProviderSpy()
-        let locationSelectionHandler = LocationSelectionHandlerSpy()
-        let sut = LocationsViewModel(
-            locationsProvider: locationsProvider,
-            onLocationSelection: locationSelectionHandler.onLocationSelection
-        )
         let firstLocation = Location(name: "First", latitude: 1, longitude: 2)
         let secondLocation = Location(name: "Second", latitude: 1, longitude: 2)
         locationsProvider.stub = .success([firstLocation, secondLocation])
