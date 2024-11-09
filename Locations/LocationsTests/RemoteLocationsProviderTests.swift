@@ -7,15 +7,9 @@ import XCTest
 
 final class RemoteLocationsProviderTests: XCTestCase {
     
-    private var client: HTTPClientSpy!
-    private var sut: RemoteLocationsProvider!
-    
-    override func setUp() {
-        super.setUp()
-        client = HTTPClientSpy()
-        sut = RemoteLocationsProvider(httpClient: client)
-    }
-    
+    private lazy var client = HTTPClientSpy()
+    private lazy var sut = RemoteLocationsProvider(httpClient: client)
+
     func test_getLocations_getsLocationsFromUrl() async {
         _ = try? await sut.getLocations()
         
