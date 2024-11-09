@@ -13,7 +13,7 @@ struct LocationsApp: App {
     var body: some Scene {
         WindowGroup {
             LocationsView(
-                model: LocationsViewModelAssembler.make(
+                viewModel: LocationsViewModelAssembler.make(
                     locationsProvider: locationProvider,
                     openUrl: { UIApplication.shared.open($0) }
                 )

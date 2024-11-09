@@ -6,14 +6,14 @@ import SwiftUI
 
 struct LocationsView: View {
             
-    @ObservedObject private var model: LocationsViewModel
+    @ObservedObject private var viewModel: LocationsViewModel
     
-    init(model: LocationsViewModel) {
-        self.model = model
+    init(viewModel: LocationsViewModel) {
+        self.viewModel = viewModel
     }
     
     var body: some View {
-        LocationsPresentingView(state: model.state)
-            .task { await model.loadLocations() }
+        LocationsPresentingView(state: viewModel.state)
+            .task { await viewModel.loadLocations() }
     }
 }
