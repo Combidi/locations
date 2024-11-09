@@ -4,7 +4,6 @@
 
 import SwiftUI
 
-let navigator = WikipediaLocationNavigator(openUrl: { UIApplication.shared.open($0) })
 let session = URLSession(configuration: .ephemeral)
 let httpClient = UrlSessionHttpClient(session: session)
 let locationProvider = RemoteLocationsProvider(httpClient: httpClient)
@@ -14,11 +13,28 @@ struct LocationsApp: App {
     var body: some Scene {
         WindowGroup {
             LocationsView(
-                model: LocationsViewModel(
+                model: LocationsViewModelAssembler.make(
                     locationsProvider: locationProvider,
-                    onLocationSelection: navigator.showLocationOnWikipedia
+                    openUrl: { UIApplication.shared.open($0) }
                 )
             )
         }
+    }
+}
+
+@MainActor
+enum LocationsViewModelAssembler {
+    static func make(
+        locationsProvider: LocationsProvider,
+        openUrl: @escaping (URL) -> Void
+    ) -> LocationsViewModel {
+        let navigator = WikipediaLocationNavigator(
+            openUrl: openUrl
+        )
+        let viewModel = LocationsViewModel(
+            locationsProvider: locationsProvider,
+            onLocationSelection: navigator.showLocationOnWikipedia
+        )
+        return viewModel
     }
 }
