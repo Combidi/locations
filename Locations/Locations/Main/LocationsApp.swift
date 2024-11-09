@@ -4,9 +4,9 @@
 
 import SwiftUI
 
-let session = URLSession(configuration: .ephemeral)
-let httpClient = UrlSessionHttpClient(session: session)
-let locationProvider = RemoteLocationsProvider(httpClient: httpClient)
+private let session = URLSession(configuration: .ephemeral)
+private let httpClient = UrlSessionHttpClient(session: session)
+private let locationProvider = RemoteLocationsProvider(httpClient: httpClient)
 
 @main
 struct LocationsApp: App {
