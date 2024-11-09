@@ -3,7 +3,6 @@
 //
 
 import XCTest
-import Foundation
 @testable import Locations
 
 final class WikipediaLocationNavigatorTests: XCTestCase {
