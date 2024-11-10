@@ -1,3 +1,7 @@
+In this repo you will find a simple iOS application which shows a list of locations from a remote JSON file. Whe location will be shown in the Wikipedia app once a location from the gets selected.
+
+I cloned the entire main branch of the Wikipedia iOS application and modified in such a way that when opened, it navigates to the Places tab and directly navigates to the selected location.
+
 ### Locations App 📍
 
 The Dependency Diagram shows the source code dependencies between the modules and components out of which this simple application is build. This should give you a clear picture of how the application is setup.
